@@ -1,45 +1,57 @@
 import * as React from "react";
-import { graphql, QueryRenderer } from "react-relay";
+import { graphql, createPaginationContainer } from "react-relay";
 
-import environment from "~/relay";
+import type { ItemList_list } from "./__generated__/ItemList_list.graphql";
 
-const GQL_QUERY = graphql`
-  query ItemListQuery {
-    items(first: 0) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        endCursor
-        startCursor
-      }
-      edges {
-        node {
-          id
-          title
-        }
-        cursor
-      }
-    }
-  }
-`;
+interface Props {
+  list: ItemList_list
+}
 
-const ItemList: React.FC = () => (
-  <QueryRenderer
-    environment={environment}
-    query={GQL_QUERY}
-    variables={{}}
-    render={({ error, props }) => {
-      if (error) {
-        return <div>Error!</div>;
-      }
-      if (!props) {
-        return <div>Loading...</div>;
-      }
-      return <pre>{JSON.stringify(props)}</pre>;
-    }}
-  />
-);
+const ItemList: React.FC<Props> = () => {
+  return <></>;
+};
 
 ItemList.displayName = "ItemList";
 
-export default ItemList;
+export default createPaginationContainer(
+  ItemList,
+  {
+    list: graphql`
+      fragment ItemList_list on Query
+      @argumentDefinitions(
+        count: { type: "Int", defaultValue: 10 }
+        cursor: { type: "Cursor" }
+      ) {
+        items(first: 0, limit: $count, after: $cursor)
+          @connection(key: "ItemList_items") {
+          edges {
+            node {
+              id
+              ...Item_item
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    direction: "forward",
+    getVariables(_props, { count, cursor }, _fragmentVariables) {
+      return {
+        count,
+        cursor,
+      };
+    },
+    getFragmentVariables(prevVars, totalCount) {
+      return {
+        ...prevVars,
+        count: totalCount
+      }
+    },
+    query: graphql`
+      query ItemListPaginationQuery($count: Int!, $cursor: Cursor) {
+        ...ItemList_list @arguments(count: $count, cursor: $cursor)
+      }
+    `,
+  }
+);

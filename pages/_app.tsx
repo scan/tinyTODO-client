@@ -1,7 +1,7 @@
-import 'core-js/es/map';
-import 'core-js/es/set';
-import 'core-js/es/promise';
-import 'core-js/es/object';
+import "core-js/es/map";
+import "core-js/es/set";
+import "core-js/es/promise";
+import "core-js/es/object";
 
 import * as React from "react";
 

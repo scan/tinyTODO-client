@@ -3,34 +3,34 @@ scalar Time
 scalar Cursor
 
 type Query {
-    items(first: Int! = 0, limit: Int! = 10, after: Cursor): ItemConnection!
+  items(first: Int! = 0, limit: Int! = 10, after: Cursor): ItemConnection!
 }
 
 type Mutation {
-    addItem(item: NewItem!): Item
-    removeItem(id: ID!): Boolean!
+  addItem(item: NewItem!): Item
+  removeItem(id: ID!): Boolean!
 }
 
 input NewItem {
-    title: String!
-    content: String
+  title: String!
+  content: String
 }
 
 type Item implements Node {
-    id: ID!
-    title: String!
-    content: String
-    createdAt: Time!
+  id: ID!
+  title: String!
+  content: String
+  createdAt: Time!
 }
 
 type ItemConnection {
-    edges: [ItemEdge!]!
-    pageInfo: PageInfo!
+  edges: [ItemEdge!]!
+  pageInfo: PageInfo!
 }
 
 type ItemEdge {
-    node: Item!
-    cursor: Cursor!
+  node: Item!
+  cursor: Cursor!
 }
 
 type PageInfo {
@@ -41,5 +41,5 @@ type PageInfo {
 }
 
 interface Node {
-    id: ID!
+  id: ID!
 }
