@@ -27,7 +27,7 @@ query ItemListPaginationQuery(
 }
 
 fragment ItemList_list_1G22uz on Query {
-  items(first: 0, limit: $count, after: $cursor) {
+  items(first: $count, after: $cursor) {
     edges {
       node {
         id
@@ -69,13 +69,8 @@ v1 = [
     "variableName": "cursor"
   },
   {
-    "kind": "Literal",
-    "name": "first",
-    "value": 0
-  },
-  {
     "kind": "Variable",
-    "name": "limit",
+    "name": "first",
     "variableName": "count"
   }
 ];
@@ -208,9 +203,7 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "filters": [
-          "limit"
-        ],
+        "filters": null,
         "handle": "connection",
         "key": "ItemList_items",
         "kind": "LinkedHandle",
@@ -219,12 +212,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "82655d24356a1fe04f57386444b77352",
+    "cacheID": "4345ce036cb007e05243869c806708fb",
     "id": null,
     "metadata": {},
     "name": "ItemListPaginationQuery",
     "operationKind": "query",
-    "text": "query ItemListPaginationQuery(\n  $count: Int!\n  $cursor: Cursor\n) {\n  ...ItemList_list_1G22uz\n}\n\nfragment ItemList_list_1G22uz on Query {\n  items(first: 0, limit: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        ...Item_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Item_item on Item {\n  title\n  content\n}\n"
+    "text": "query ItemListPaginationQuery(\n  $count: Int!\n  $cursor: Cursor\n) {\n  ...ItemList_list_1G22uz\n}\n\nfragment ItemList_list_1G22uz on Query {\n  items(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        ...Item_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Item_item on Item {\n  title\n  content\n}\n"
   }
 };
 })();

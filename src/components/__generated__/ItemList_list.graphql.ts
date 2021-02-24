@@ -40,7 +40,7 @@ const node: ReaderFragment = {
   "metadata": {
     "connection": [
       {
-        "count": null,
+        "count": "count",
         "cursor": "cursor",
         "direction": "forward",
         "path": [
@@ -53,13 +53,7 @@ const node: ReaderFragment = {
   "selections": [
     {
       "alias": "items",
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "limit",
-          "variableName": "count"
-        }
-      ],
+      "args": null,
       "concreteType": "ItemConnection",
       "kind": "LinkedField",
       "name": "__ItemList_items_connection",
@@ -145,5 +139,5 @@ const node: ReaderFragment = {
   "type": "Query",
   "abstractKey": null
 };
-(node as any).hash = '0755deb6a906f03b768d2e6499ea68f4';
+(node as any).hash = '3ee466c38c3a72a7b4028872d65b157b';
 export default node;

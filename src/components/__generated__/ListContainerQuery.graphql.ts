@@ -21,7 +21,7 @@ query ListContainerQuery {
 }
 
 fragment ItemList_list on Query {
-  items(first: 0, limit: 10) {
+  items(first: 10) {
     edges {
       node {
         id
@@ -48,11 +48,6 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 0
-  },
-  {
-    "kind": "Literal",
-    "name": "limit",
     "value": 10
   }
 ];
@@ -169,14 +164,12 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "items(first:0,limit:10)"
+        "storageKey": "items(first:10)"
       },
       {
         "alias": null,
         "args": (v0/*: any*/),
-        "filters": [
-          "limit"
-        ],
+        "filters": null,
         "handle": "connection",
         "key": "ItemList_items",
         "kind": "LinkedHandle",
@@ -185,12 +178,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "76c33f5d0a4d6171abc46ad0ea5bc888",
+    "cacheID": "ecf132e28460ca5fed70d0047401bfc0",
     "id": null,
     "metadata": {},
     "name": "ListContainerQuery",
     "operationKind": "query",
-    "text": "query ListContainerQuery {\n  ...ItemList_list\n}\n\nfragment ItemList_list on Query {\n  items(first: 0, limit: 10) {\n    edges {\n      node {\n        id\n        ...Item_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Item_item on Item {\n  title\n  content\n}\n"
+    "text": "query ListContainerQuery {\n  ...ItemList_list\n}\n\nfragment ItemList_list on Query {\n  items(first: 10) {\n    edges {\n      node {\n        id\n        ...Item_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Item_item on Item {\n  title\n  content\n}\n"
   }
 };
 })();
