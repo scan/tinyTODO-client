@@ -1,4 +1,6 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import { commitMutation, graphql } from "react-relay";
+import { useForm } from "react-hook-form";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -7,7 +9,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { useForm } from "react-hook-form";
+
+import environment from "~/relay";
+import type {
+  CreateItemFormDialogMutation,
+  CreateItemFormDialogMutationVariables,
+} from "./__generated__/CreateItemFormDialogMutation.graphql";
 
 interface FormData {
   title: string;
@@ -19,12 +26,35 @@ interface Props {
   onClose: () => void;
 }
 
+const createItemMutation = graphql`
+  mutation CreateItemFormDialogMutation($title: String!, $content: String) {
+    addItem(item: { title: $title, content: $content }) {
+      id
+    }
+  }
+`;
+
 const CreateItemFormDialog: React.FC<Props> = ({ open, onClose }) => {
   const { register, handleSubmit, errors } = useForm<FormData>();
+  const [submitting, setSubmitting] = useState(false);
 
   const startCreate = useCallback((data: FormData) => {
-    console.log(data);
-  }, []);
+    setSubmitting(true);
+
+    const variables: CreateItemFormDialogMutationVariables = {
+      title: data.title,
+      content: data.content,
+    };
+
+    commitMutation<CreateItemFormDialogMutation>(environment, {
+      mutation: createItemMutation,
+      variables,
+      onCompleted: () => {
+        setSubmitting(false);
+        onClose();
+      },
+    });
+  }, [onClose, setSubmitting]);
 
   return (
     <Dialog
@@ -72,10 +102,11 @@ const CreateItemFormDialog: React.FC<Props> = ({ open, onClose }) => {
             onClick={onClose}
             color="secondary"
             tabIndex={-1}
+            disabled={submitting}
           >
             Cancel
           </Button>
-          <Button type="submit" color="primary">
+          <Button type="submit" color="primary" disabled={submitting}>
             Create
           </Button>
         </DialogActions>
