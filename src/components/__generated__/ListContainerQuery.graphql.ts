@@ -21,7 +21,7 @@ query ListContainerQuery {
 }
 
 fragment ItemList_list on Query {
-  items(first: 10) {
+  items(first: 5) {
     edges {
       node {
         id
@@ -48,7 +48,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 10
+    "value": 5
   }
 ];
 return {
@@ -164,7 +164,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "items(first:10)"
+        "storageKey": "items(first:5)"
       },
       {
         "alias": null,
@@ -178,12 +178,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ecf132e28460ca5fed70d0047401bfc0",
+    "cacheID": "74afefe87a97249787adb79b557158f1",
     "id": null,
     "metadata": {},
     "name": "ListContainerQuery",
     "operationKind": "query",
-    "text": "query ListContainerQuery {\n  ...ItemList_list\n}\n\nfragment ItemList_list on Query {\n  items(first: 10) {\n    edges {\n      node {\n        id\n        ...Item_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Item_item on Item {\n  title\n  content\n}\n"
+    "text": "query ListContainerQuery {\n  ...ItemList_list\n}\n\nfragment ItemList_list on Query {\n  items(first: 5) {\n    edges {\n      node {\n        id\n        ...Item_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Item_item on Item {\n  title\n  content\n}\n"
   }
 };
 })();

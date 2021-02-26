@@ -26,7 +26,7 @@ export type ItemList_list$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
+      "defaultValue": 5,
       "kind": "LocalArgument",
       "name": "count"
     },
@@ -139,5 +139,5 @@ const node: ReaderFragment = {
   "type": "Query",
   "abstractKey": null
 };
-(node as any).hash = '3ee466c38c3a72a7b4028872d65b157b';
+(node as any).hash = '343f7f41f536b96459f02fa3bf32dfc0';
 export default node;
