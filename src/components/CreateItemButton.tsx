@@ -4,6 +4,8 @@ import Fab from "@material-ui/core/Fab";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 
+import CreateItemFormDialog from "./CreateItemFormDialog";
+
 const useStyles = makeStyles((theme) => ({
   fab: {
     position: "absolute",
@@ -16,10 +18,17 @@ const CreateItemButton: React.FC = () => {
   const classes = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleClick = useCallback((event: React.MouseEvent) => {
-    event.preventDefault();
+  const handleClick = useCallback(
+    (event: React.MouseEvent) => {
+      event.preventDefault();
 
-    setDialogOpen(true);
+      setDialogOpen(true);
+    },
+    [setDialogOpen]
+  );
+
+  const handleClose = useCallback(() => {
+    setDialogOpen(false);
   }, [setDialogOpen]);
 
   return (
@@ -32,6 +41,8 @@ const CreateItemButton: React.FC = () => {
       >
         <AddIcon />
       </Fab>
+
+      <CreateItemFormDialog open={dialogOpen} onClose={handleClose} />
     </>
   );
 };

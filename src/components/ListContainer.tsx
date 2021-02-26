@@ -7,12 +7,7 @@ import environment from "~/relay";
 import type { ListContainerQueryResponse } from "./__generated__/ListContainerQuery.graphql";
 
 const ListContainer: React.FC = () => {
-  const renderContent = ({ props }: { props?: ListContainerQueryResponse }) => {
-    if (props) {
-      return <ItemList list={props} />;
-    }
-    return null;
-  };
+  //const renderContent = ;
 
   const query = graphql`
     query ListContainerQuery {
@@ -25,7 +20,12 @@ const ListContainer: React.FC = () => {
       environment={environment}
       query={query}
       variables={{}}
-      render={renderContent}
+      render={({ props }) => {
+        if (props) {
+          return <ItemList list={props as ListContainerQueryResponse} />;
+        }
+        return null;
+      }}
     />
   );
 };
