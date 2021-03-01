@@ -24,6 +24,7 @@ interface FormData {
 interface Props {
   open: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 }
 
 const createItemMutation = graphql`
@@ -34,27 +35,35 @@ const createItemMutation = graphql`
   }
 `;
 
-const CreateItemFormDialog: React.FC<Props> = ({ open, onClose }) => {
+const CreateItemFormDialog: React.FC<Props> = ({
+  open,
+  onClose,
+  onSuccess,
+}) => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [submitting, setSubmitting] = useState(false);
 
-  const startCreate = useCallback((data: FormData) => {
-    setSubmitting(true);
+  const startCreate = useCallback(
+    (data: FormData) => {
+      setSubmitting(true);
 
-    const variables: CreateItemFormDialogMutationVariables = {
-      title: data.title,
-      content: data.content,
-    };
+      const variables: CreateItemFormDialogMutationVariables = {
+        title: data.title,
+        content: data.content,
+      };
 
-    commitMutation<CreateItemFormDialogMutation>(environment, {
-      mutation: createItemMutation,
-      variables,
-      onCompleted: () => {
-        setSubmitting(false);
-        onClose();
-      },
-    });
-  }, [onClose, setSubmitting]);
+      commitMutation<CreateItemFormDialogMutation>(environment, {
+        mutation: createItemMutation,
+        variables,
+        onCompleted: () => {
+          setSubmitting(false);
+          onSuccess && onSuccess();
+          onClose();
+        },
+      });
+    },
+    [onClose, setSubmitting]
+  );
 
   return (
     <Dialog

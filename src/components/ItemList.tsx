@@ -1,25 +1,34 @@
 import * as React from "react";
-import { graphql, createPaginationContainer } from "react-relay";
+import { graphql, createPaginationContainer, RelayPaginationProp } from "react-relay";
 
 import Grid from "@material-ui/core/Grid";
 
 import type { ItemList_list } from "./__generated__/ItemList_list.graphql";
 
 import Item from "~/components/Item";
+import CreateItemButton from "~/components/CreateItemButton";
 
 interface Props {
   list: ItemList_list;
+  relay: RelayPaginationProp;
 }
 
-const ItemList: React.FC<Props> = ({ list }) => {
+const ItemList: React.FC<Props> = ({ list, relay }) => {
+  const handleCreationSuccess = React.useCallback(() => {
+    relay.refetchConnection(5);
+  }, [relay])
+
   return (
-    <Grid container spacing={2}>
-      {list.items.edges.map((edge) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={edge.node.id}>
-          <Item item={edge.node} />
-        </Grid>
-      ))}
-    </Grid>
+    <>
+      <Grid container spacing={2}>
+        {list.items.edges.map((edge) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={edge.node.id}>
+            <Item item={edge.node} />
+          </Grid>
+        ))}
+      </Grid>
+      <CreateItemButton onSuccess={handleCreationSuccess} />
+    </>
   );
 };
 

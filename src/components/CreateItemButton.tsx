@@ -14,7 +14,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateItemButton: React.FC = () => {
+interface Props {
+  onSuccess?: () => void;
+}
+
+const CreateItemButton: React.FC<Props> = ({ onSuccess }) => {
   const classes = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -42,7 +46,11 @@ const CreateItemButton: React.FC = () => {
         <AddIcon />
       </Fab>
 
-      <CreateItemFormDialog open={dialogOpen} onClose={handleClose} />
+      <CreateItemFormDialog
+        open={dialogOpen}
+        onClose={handleClose}
+        onSuccess={onSuccess}
+      />
     </>
   );
 };

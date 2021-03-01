@@ -5,7 +5,6 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 
 import ListContainer from "~/components/ListContainer";
-import CreateItemButton from "~/components/CreateItemButton";
 
 const Home: NextPage = () => (
   <Container>
@@ -13,7 +12,6 @@ const Home: NextPage = () => (
       List of Todos
     </Typography>
     <ListContainer />
-    <CreateItemButton />
   </Container>
 );
 
